@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Management</title>
+</head>
+<body>
+    <h1>Company Management</h1>
+    <h2>Account Balance: {{ account }}</h2>
+    <h2>Inventory:</h2>
+    <ul>
+        {% for product, details in inventory.items() %}
+            <li>Product: {{ product }}, Price: {{ details[0] }}, Quantity: {{ details[1] }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Purchase</h2>
+    <form action="/purchase" method="post">
+        <label for="product_name">Product Name:</label>
+        <input type="text" id="product_name" name="product_name"><br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price"><br>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity"><br>
+        <input type="submit" value="Purchase">
+    </form>
+
+    <h2>Sale</h2>
+    <form action="/sale" method="post">
+        <label for="product_name">Product Name:</label>
+        <input type="text" id="product_name" name="product_name"><br>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity"><br>
+        <input type="submit" value="Sale">
+    </form>
+
+    <h2>Change Balance</h2>
+    <form action="/change_balance" method="post">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount"><br>
+        <input type="submit" value="Change Balance">
+    </form>
+
+    <h2><a href="/historia">History</a></h2>
+</body>
+</html>
