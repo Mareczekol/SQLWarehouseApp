@@ -46,9 +46,15 @@ def home():
 
 @app.route('/purchase', methods=['POST'])
 def purchase():
-    product_name = request.form['product_name']
-    price = float(request.form['price'])
-    quantity = int(request.form['quantity'])
+    product_name = request.form.get('product_name')
+    price = request.form.get('price')
+    quantity = request.form.get('quantity')
+
+    if not product_name or not price or not quantity:
+        return "Please fill all the fields", 400
+
+    price = float(price)
+    quantity = int(quantity)
 
     inventory = Inventory.query.filter_by(product_name=product_name).first()
     if inventory:
@@ -72,8 +78,13 @@ def purchase():
 
 @app.route('/sale', methods=['POST'])
 def sale():
-    product_name = request.form['product_name']
-    quantity = int(request.form['quantity'])
+    product_name = request.form.get('product_name')
+    quantity = request.form.get('quantity')
+
+    if not product_name or not quantity:
+        return "Please fill all the fields", 400
+
+    quantity = int(quantity)
 
     inventory = load_inventory()
     if product_name in inventory and inventory[product_name][1] >= quantity:
@@ -93,7 +104,12 @@ def sale():
 
 @app.route('/change_balance', methods=['POST'])
 def change_balance():
-    amount = float(request.form['amount'])
+    amount = request.form.get('amount')
+
+    if not amount:
+        return "Please fill all the fields", 400
+
+    amount = float(amount)
 
     account = load_account()
     account += amount
@@ -107,7 +123,7 @@ def change_balance():
     return redirect(url_for('home'))
 
 
-@app.route('/historia', methods=['GET', 'POST'])
+@app.route('/history', methods=['GET', 'POST'])
 def history():
     actions = load_actions()
     start = request.args.get('start')
