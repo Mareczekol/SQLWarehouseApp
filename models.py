@@ -28,4 +28,3 @@ class History(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     action = db.relationship('Action', backref=db.backref('history', lazy=True))
-
