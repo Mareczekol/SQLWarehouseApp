@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Company Management</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Company Management</h1>
+    <h1>Welcome to the Inventory Management System</h1>
+
+    <!-- Display error message if any -->
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
     <h2>Account Balance: {{ account }}</h2>
-    <h2>Inventory:</h2>
+    <h2>Inventory</h2>
     <ul>
         {% for product, details in inventory.items() %}
-            <li>Product: {{ product }}, Price: {{ details[0] }}, Quantity: {{ details[1] }}</li>
+            <li>{{ product }} - Price: {{ details[0] }}, Quantity: {{ details[1] }}</li>
         {% endfor %}
     </ul>
-
+    <form action="{{ url_for('purchase') }}" method="POST">
+    </form>
     <h2>Purchase</h2>
-    <form action="/purchase" method="post">
+    <form action="/purchase" method="POST">
         <label for="product_name">Product Name:</label>
-        <input type="text" id="product_name" name="product_name"><br>
+        <input type="text" id="product_name" name="product_name" required><br>
+
         <label for="price">Price:</label>
-        <input type="number" id="price" name="price"><br>
+        <input type="number" id="price" name="price" step="0.01" required><br>
+
         <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity"><br>
+        <input type="number" id="quantity" name="quantity" required><br>
+
         <input type="submit" value="Purchase">
     </form>
 
     <h2>Sale</h2>
-    <form action="/sale" method="post">
+    <form action="/sale" method="POST">
         <label for="product_name">Product Name:</label>
-        <input type="text" id="product_name" name="product_name"><br>
+        <input type="text" id="product_name" name="product_name" required><br>
+
         <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity"><br>
+        <input type="number" id="quantity" name="quantity" required><br>
+
         <input type="submit" value="Sale">
     </form>
 
     <h2>Change Balance</h2>
-    <form action="/change_balance" method="post">
+    <form action="/change_balance" method="POST">
         <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount"><br>
+        <input type="number" id="amount" name="amount" step="0.01" required><br>
+
         <input type="submit" value="Change Balance">
     </form>
 
-    <h2><a href="/historia">History</a></h2>
+    <h2>History</h2>
+    <a href="/history">View History</a>
 </body>
 </html>
